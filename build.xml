@@ -1,0 +1,33 @@
+<project name="archivereplacer" default="dist" basedir=".">
+
+	<property name="src" location="src" />
+	<property name="bin" location="bin" />
+	<property name="dist" location="dist" />
+
+	<target name="init">
+		<tstamp />
+		<mkdir dir="${bin}" />
+	</target>
+
+	<target name="compile" depends="init">
+		<javac srcdir="${src}" destdir="${bin}" includeantruntime="false"/>
+	</target>
+
+	<target name="dist" depends="compile">
+		<jar jarfile="${dist}/archivereplacer.jar" basedir="${bin}">
+			<manifest>
+				<attribute name="Main-Class" value="com.froyo.ArchiveUpdater" />
+			</manifest>		
+		</jar>
+		<copy todir="dist">
+			<fileset dir="testresources"/>
+		</copy>
+	
+	</target>
+
+	<target name="clean">
+		<delete dir="${bin}" />
+		<delete dir="${dist}" />
+	</target>
+
+</project>
