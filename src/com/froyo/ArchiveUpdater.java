@@ -102,12 +102,12 @@ public class ArchiveUpdater {
 			JarEntry entry, File patchFile) throws Exception {
 
 		final String className = patchFile.getName();
-		FileInputStream classFile = null;
+		FileInputStream classFileStream = null;
 
 		try {
 
 			String entryName = new File(entry.getName()).getName();
-			classFile = new FileInputStream(patchFile);
+			classFileStream = new FileInputStream(patchFile);
 
 			System.out.println(entry.getName());
 			if (!entryName.equals(className)) {
@@ -126,12 +126,12 @@ public class ArchiveUpdater {
 					}
 
 				} else {
-					patchClassFile(tempJar, className, classFile);
+					patchClassFile(tempJar, className, classFileStream);
 				}
 			}
 
 		} finally {
-			classFile.close();
+			classFileStream.close();
 		}
 	}
 
@@ -178,11 +178,11 @@ public class ArchiveUpdater {
 		System.out.print(msg);
 
 		// open up standard input
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+		BufferedReader br =  null;
 		String answer = null;
 
 		try {
+			br = new BufferedReader(new InputStreamReader(System.in));
 			answer = br.readLine();
 
 			if (answer.equalsIgnoreCase("y")) {
@@ -190,7 +190,9 @@ public class ArchiveUpdater {
 			}
 
 		} catch (IOException ioe) {
-			exit("IO error trying to read your name!");
+			exit("IOException when reading interactively");
+		} finally {
+			br.close();
 		}
 		return false;
 	}
