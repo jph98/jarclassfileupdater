@@ -1,5 +1,5 @@
-ArchiveUpdater
-==============
+JAR Class File Updater
+======================
 
 Command line executable JAR that patches an archive (WAR/JAR) file with patches found in a directory:
 
